@@ -2,7 +2,6 @@ using Distributions
 using Random
 using LinearAlgebra
 using StatsBase
-using SharedArrays
 using Base.Threads
 using DelimitedFiles
 using PyCall
@@ -123,8 +122,10 @@ const T_size = convert(Int32, round(T/dt))
     SEIRS_multi_patch!(E, I, R, T, dt, N, params, coloc_3d)
     integer_part=convert(Int32,floor(params["R_local"]))
     decimal_part=convert(Int32,10*round(params["R_local"]-floor(params["R_local"]),digits=1))
-    file_path = "$output_address/output_$(i)_R_local_$(integer_part)_$(decimal_part).txt"
-    writedlm(file_path, I, ',')
+    file_path = "$output_address/I+E_output_$(i)_R_local_$(integer_part)_$(decimal_part).txt"
+    file_path_1 = "$output_address/R_output_$(i)_R_local_$(integer_part)_$(decimal_part).txt"
+    writedlm(file_path, I.+E , ',')
+    writedlm(file_path_1, R , ',')
     println("Writing part $i successful with R local $(params["R_local"])")
 end
 
