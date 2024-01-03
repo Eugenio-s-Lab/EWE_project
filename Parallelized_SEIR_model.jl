@@ -76,7 +76,7 @@ starting=time()
 
 Iterations_multi=parse(Int32,ARGS[1])
 
-include("address_file.jl")
+include(parse(String,ARGS[2]))
 address=address_colocation
 dir=readdir(address)
 coloc_3d=zeros(Float64,size(dir,1)-1,110,110)
