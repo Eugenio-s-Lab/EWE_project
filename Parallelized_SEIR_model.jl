@@ -110,7 +110,7 @@ index_seeding=dict_data[params["Seeding_department"]]
 params["R_local"]=parse(Float64,ARGS[3])
 params["beta"]=(params["R_local"]*params["mu"])/(coloc_baseline[index_seeding,index_seeding]*N[index_seeding])
 const T=size(coloc_3d,1)*7
-const dt=0.01
+const dt=1
 const Tiles = size(coloc_3d,2)
 const T_size = convert(Int32, round(T/dt))
 
@@ -118,7 +118,7 @@ const T_size = convert(Int32, round(T/dt))
     R = zeros(Int32, T_size, Tiles)
     E = zeros(Int32, T_size, Tiles)
     I = zeros(Int32, T_size, Tiles)
-    I[1,index_seeding]=1
+    I[convert(Int32,params["time_seeding"]),index_seeding]=1
     SEIRS_multi_patch!(E, I, R, T, dt, N, params, coloc_3d)
     integer_part=convert(Int32,floor(params["R_local"]))
     decimal_part=10*round(params["R_local"]-floor(params["R_local"]),digits=2)
