@@ -46,9 +46,9 @@ end
             I[t+1,i]=I[t,i]+I_new-R_new
             R[t+1,i]=R[t,i]+R_new-S_new
         end
-        if ((sum(I[t+1,:])+sum(E[t+1,:]))==0)
-            break
-        end
+        #if ((sum(I[t+1,:])+sum(E[t+1,:]))==0)
+         #   break
+        #end
     end
 end
 
