@@ -108,7 +108,7 @@ println("Reading part successful")
 
 params = include("params.jl")
 index_seeding=dict_data[params["Seeding_department"]]
-time_seeding=1+(Date(params["time_seeding"])-Date("2023-03-27")).value
+time_seeding=1+(Date(params["time_seeding"])-Date(params["time_starting_observation"])).value
 params["R_local"]=parse(Float64,ARGS[3])
 params["beta"]=(params["R_local"]*params["mu"])/(coloc_baseline[index_seeding,index_seeding]*N[index_seeding])
 const T=size(coloc_3d,1)*7
