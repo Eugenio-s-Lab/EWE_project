@@ -5,6 +5,7 @@ using StatsBase
 using Base.Threads
 using DelimitedFiles
 using PyCall
+using Dates
 
 function p_from_rate(x::Array,delta_t)
     # Compute the probability of transition from the rate in the case of the multi-patch model
