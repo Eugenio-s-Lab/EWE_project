@@ -43,9 +43,9 @@ end
             I_new=rand(Binomial(E[t,i],p_alpha))
             R_new=rand(Binomial(I[t,i],p_mu))
             S_new=rand(Binomial(R[t,i],p_omega))
-            E[t+1,i]=E[t,i]+E_new-I_new
-            I[t+1,i]=I[t,i]+I_new-R_new
-            R[t+1,i]=R[t,i]+R_new-S_new
+            E[t+1,i]+=E[t,i]+E_new-I_new
+            I[t+1,i]+=I[t,i]+I_new-R_new
+            R[t+1,i]+=R[t,i]+R_new-S_new
         end
         #if ((sum(I[t+1,:])+sum(E[t+1,:]))==0)
          #   break
@@ -120,7 +120,7 @@ const T_size = convert(Int32, round(T/dt))
     R = zeros(Int32, T_size, Tiles)
     E = zeros(Int32, T_size, Tiles)
     I = zeros(Int32, T_size, Tiles)
-    I[time_seeding,index_seeding]=1
+    I[dt*time_seeding,index_seeding]=1
     SEIRS_multi_patch!(E, I, R, T, dt, N, params, coloc_3d)
     integer_part=convert(Int32,floor(params["R_local"]))
     decimal_part=10*round(params["R_local"]-floor(params["R_local"]),digits=2)
