@@ -78,6 +78,7 @@ starting=time()
 Iterations_multi=parse(Int32,ARGS[1])
 
 include(ARGS[2])
+output_address="$output_address/$(ARGS[5])"
 address=address_colocation
 dir=readdir(address)
 coloc_3d=zeros(Float64,size(dir,1)-1,110,110)
@@ -104,9 +105,11 @@ python = pyimport("ast")
 dict_data = python.literal_eval(dict_str)
 
 
-println("Reading part successful")
+#println("Reading part successful")
 
 params = include("params.jl")
+params["Seeding_department"]=ARGS[4]
+params["time_seeding"]=ARGS[5]
 index_seeding=dict_data[params["Seeding_department"]]
 time_seeding=1+(Date(params["time_seeding"])-Date(params["time_starting_observation"])).value
 params["R_local"]=parse(Float64,ARGS[3])
@@ -130,8 +133,8 @@ const T_size = convert(Int32, round(T/dt))
     file_path_1 = "$output_address/R_output_$(i)_R_local_$(integer_part)_$(decimal_part_10)"*"$(decimal_part_100).txt"
     writedlm(file_path, I.+E , ',')
     writedlm(file_path_1, R , ',')
-    println("Writing part $i successful with R local $(params["R_local"])")
+    #println("Writing part $i successful with R local $(params["R_local"])")
 end
 
 ending=time()
-println(ending-starting)
+#println(ending-starting)
