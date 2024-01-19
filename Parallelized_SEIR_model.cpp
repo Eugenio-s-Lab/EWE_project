@@ -26,7 +26,7 @@ double compute_p_beta(int i, double beta, double dt, int N, const colocation_typ
 
 
 int main(int argc, char* argv[]) {
-    if (argc != 6) {
+    if (argc != 7) {
         std::cerr << "Wrong command-line arguments provided." << std::endl;
         return 1;
     }
@@ -58,12 +58,12 @@ int main(int argc, char* argv[]) {
     read_param_double.close();
 
     // read the address list
-    std::vector<std::string> address_file(3);
+    std::vector<std::string> address_file(2);
     std::ifstream read_param_address(argv[3]);
     if (!read_param_address.is_open()) {
             std::cerr << "Error opening file: " << argv[3] << std::endl;
         }
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < 2; ++i) {
         if (!(read_param_address >> address_file[i])) {
                     std::cerr << "Error reading from file: " << argv[3] << std::endl;
                 }
@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
     int initial_infected = parameters_int[5];  // number of initial infected
     std::string file_coloc_template = address_file[0];  // directory of the colocation files up to the index. eg. "./baseline/" 
     std::string file_pop = address_file[1]; // filename and path of the pop file
-    std::string output_address = address_file[2]; //
+    std::string output_address = argv[6]; //
 
     // FIXED PARAMETERS
     int colocation_periodicity = 7;   // new colocation every xx days
@@ -104,13 +104,15 @@ int main(int argc, char* argv[]) {
         std::ifstream file(file_coloc);
         if (!file.is_open()) {
             std::cerr << "Error opening file: " << file_coloc << std::endl;
-        }
+            return 1;
+	}
 
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
                 if (!(file >> colocation_baseline[i][j])) {
                     std::cerr << "Error reading from file: " << file_coloc << std::endl;
-                }
+                    return 1;
+		}
             }
         }
     for (int c=0; c<T_coloc; c++) {
@@ -118,13 +120,15 @@ int main(int argc, char* argv[]) {
         std::ifstream file(file_coloc);
         if (!file.is_open()) {
             std::cerr << "Error opening file: " << file_coloc << std::endl;
-        }
+            return 1;
+	}
 
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
                 if (!(file >> colocation[c][i][j])) {
-                    std::cerr << "Error reading from file: " << file_coloc << std::endl;
-                }
+                    std::cerr << "Error reading from file: " << file_coloc << " at position (" << i << ", " << j << ")" << std::endl;
+                    return 1;
+		}
             }  // end for j
         } // end for i
 
