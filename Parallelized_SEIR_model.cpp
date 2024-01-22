@@ -236,27 +236,29 @@ int main(int argc, char* argv[]) {
 
 
         }  // end for t
-        
-        int integer_part = static_cast<int>(std::floor(R_local));
-        double decimal_part = std::round(100*(R_local - std::floor(R_local)));
 
-        std::ostringstream file_path_stream;
-        file_path_stream << "gzip - > " << output_address << "/I+E+R_output_" << it+1 << "_R_local_" << integer_part << "_"
+    }  // end for it
+
+    int integer_part = static_cast<int>(std::floor(R_local));
+    double decimal_part = std::round(100*(R_local - std::floor(R_local)));
+
+    std::ostringstream file_path_stream;
+        file_path_stream << "gzip - > " << output_address << "/I+E+R" << "_R_local_" << integer_part << "_"
                         << decimal_part << ".txt.gz";
         std::string file_path = file_path_stream.str();
 
         FILE *pipe = popen(file_path.c_str(), "w");
 
-        for (int i=0; i<T; i++) { 
-            for (int j=0; j<N-1; j++) {
-                fprintf(pipe, "%d ", attack_rate[it][i][j]);
+        for (int it=0; it<n_runs; it++) {
+            for (int i=0; i<T; i++) { 
+                for (int j=0; j<N-1; j++) {
+                    fprintf(pipe, "%d ", attack_rate[it][i][j]);
+                }
+                fprintf(pipe, "%d\n", attack_rate[it][i][N-1]);
             }
-            fprintf(pipe, "%d\n", attack_rate[it][i][N-1]);
         }
 
         pclose(pipe);
-
-    }  // end for it
 
 
     return 0;
