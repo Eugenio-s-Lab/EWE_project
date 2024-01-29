@@ -16,6 +16,6 @@ dict_polygon_name=dict((key, value-1) for (key, value) in dict_polygon_name.item
 Seeding_province=dict_polygon_name[sys.argv[1]]
 Instance_of_infection=(pd.to_datetime(sys.argv[2])-pd.to_datetime(Dictionary['time_starting_observation'])).days
 float_numbers=[Dictionary["alpha"],Dictionary["mu"]]
-np.savetxt("params_double.txt", float_numbers)
-integer_numbers=int_values=[Dictionary["Tiles"],Max_Time,Number_of_colocation,Instance_of_infection,Seeding_province,Dictionary["Initial_infected"]]
-np.savetxt("params_int.txt", integer_numbers, fmt="%d")
+np.savetxt("params_double_"+sys.argv[1]+".txt", float_numbers)
+integer_numbers=[Dictionary["Tiles"],Max_Time,Number_of_colocation,Instance_of_infection,Seeding_province,Dictionary["Initial_infected"]]
+np.savetxt("params_int_"+sys.argv[1]+".txt", integer_numbers, fmt="%d")
