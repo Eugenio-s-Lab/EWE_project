@@ -6,7 +6,6 @@ Dictionary = {
         "Tiles" : 110,
         "Initial_infected" : 1,
         "Last_colocation_file" : "2023-12-04",
-        "Number_of_runs" : 3
     }
 
     

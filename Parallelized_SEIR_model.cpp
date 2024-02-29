@@ -150,7 +150,7 @@ int main(int argc, char* argv[]) {
     }  // end i
     rin.close();
 
-    double beta = (R_local*mu)/(colocation[0][index_seed][index_seed]*population[index_seed]);
+    double beta = (R_local*mu)/(colocation_baseline[index_seed][index_seed]*population[index_seed]);
 
     ////////////
     // base random seed
