@@ -240,17 +240,19 @@ int main(int argc, char* argv[]) {
     }  // end for it
 
     int integer_part = static_cast<int>(std::floor(R_local));
-    double decimal_part = std::round(100*(R_local - std::floor(R_local)));
+    double decimal_part = 10*(R_local - std::floor(R_local));
+    int decimal_part_10 = static_cast<int>(std::floor(decimal_part));
+    int decimal_part_100 = static_cast<int>(10*(decimal_part - std::floor(decimal_part)));
 
     std::ostringstream file_path_stream;
         file_path_stream << "gzip - > " << output_address << "/I+E+R" << "_R_local_" << integer_part << "_"
-                        << decimal_part << ".txt.gz";
+                        << decimal_part_10 << decimal_part_100 << ".txt.gz";
         std::string file_path = file_path_stream.str();
 
         FILE *pipe = popen(file_path.c_str(), "w");
 
         for (int it=0; it<n_runs; it++) {
-            for (int i=0; i<T; i++) { 
+            for (int i=0; i<T; i+=14) { 
                 for (int j=0; j<N-1; j++) {
                     fprintf(pipe, "%d ", attack_rate[it][i][j]);
                 }
